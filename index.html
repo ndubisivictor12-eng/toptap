@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#101827" />
+    <title>TopTap — Tap & Earn</title>
+    <script src="https://telegram.org/js/telegram-web-app.js?64"></script>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand-mark" aria-hidden="true">T</div>
+        <div class="brand-copy">
+          <p class="eyebrow">WELCOME TO</p>
+          <h1>TopTap</h1>
+        </div>
+        <button class="avatar" aria-label="Profile">👤</button>
+      </header>
+
+      <section class="balance-card" aria-label="Your points balance">
+        <div class="balance-label"><span class="coin-small">T</span> YOUR POINTS</div>
+        <div class="balance-row"><strong id="balance">0</strong><span class="unit">TAP</span></div>
+        <div class="balance-foot"><span class="status-dot"></span> Ready to collect</div>
+      </section>
+
+      <section class="tap-area" aria-label="Tap to earn points">
+        <p class="tap-prompt">TAP THE COIN TO EARN</p>
+        <button class="tap-button" id="tapButton" aria-label="Tap to earn one point">
+          <span class="coin-glow"></span>
+          <span class="coin-face"><span class="coin-letter">T</span><span class="coin-rings"></span></span>
+        </button>
+        <p class="tap-hint">Every tap earns <b>+1 TAP</b></p>
+      </section>
+
+      <section class="stats-row" aria-label="Session stats">
+        <div class="stat-card"><span class="stat-icon">⚡</span><div><small>ENERGY</small><strong>1,000 / 1,000</strong></div></div>
+        <div class="stat-card"><span class="stat-icon">🏆</span><div><small>YOUR RANK</small><strong>Rookie</strong></div></div>
+      </section>
+
+      <nav class="bottom-nav" aria-label="Main navigation">
+        <button class="nav-item active"><span>⌂</span><small>Home</small></button>
+        <button class="nav-item"><span>🎁</span><small>Rewards</small></button>
+        <button class="nav-item"><span>👥</span><small>Friends</small></button>
+        <button class="nav-item"><span>👤</span><small>Profile</small></button>
+      </nav>
+      <p class="demo-note">Prototype preview · points are saved only in this browser</p>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>
