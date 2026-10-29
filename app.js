@@ -4,8 +4,8 @@ const tapButton = document.querySelector('#tapButton');
 const gameStatus = document.querySelector('#gameStatus');
 const telegramApp = window.Telegram?.WebApp;
 
-// Set this to the Supabase Edge Function URL after deploying the function.
 const API_URL = 'https://ipygbcnhmdtwnspfymdq.supabase.co/functions/v1/toptap';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_DJVqaPSMSSqXLD6j2gtHoQ_6ceX08in';
 
 if (telegramApp) {
   telegramApp.ready();
@@ -19,7 +19,7 @@ function showError(message) {
 
 function render(player) {
   balanceLabel.textContent = Number(player.balance).toLocaleString();
-  energyLabel.textContent = `${Number(player.energy).toLocaleString()} / ${Number(player.max_energy).toLocaleString()}`;
+  energyLabel.textContent = Number(player.energy).toLocaleString() + ' / ' + Number(player.max_energy).toLocaleString();
 }
 
 async function send(action, tapCount = 0) {
@@ -28,7 +28,10 @@ async function send(action, tapCount = 0) {
   }
   const response = await fetch(API_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      apikey: SUPABASE_PUBLISHABLE_KEY,
+    },
     body: JSON.stringify({ initData: telegramApp.initData, action, tapCount }),
   });
   const result = await response.json();
