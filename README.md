@@ -1,20 +1,22 @@
 # TopTap
 
-TopTap is a Telegram Mini App prototype for a tap-and-earn game.
+TopTap is a Telegram Mini App tap-and-earn game. Player balances are stored by Supabase, and each request is authenticated against Telegram's signed Mini App launch data.
 
-## Preview
+## Supabase setup
 
-Open `index.html` in a browser and tap the green coin. The current prototype
-stores a demo balance in that browser only. It is not a real or secure points
-system yet.
+1. In the Supabase SQL Editor for project `ipygbcnhmdtwnspfymdq`, run `supabase/migrations/202610290001_toptap.sql` once. It creates a separate `toptap_players` table; the legacy `users` table is left alone.
+2. Deploy `supabase/functions/toptap/index.ts` as an Edge Function named `toptap`, with JWT verification disabled. The function verifies Telegram's signature itself before it reads or changes player data.
+3. In Supabase Function Secrets, add `TELEGRAM_BOT_TOKEN` using the token from BotFather. Enter it directly in Supabase; never put it in this repository or in the web app.
+4. Publish the updated `index.html`, `style.css`, and `app.js` to the existing GitHub Pages site, then reopen the bot in Telegram.
 
-## Telegram setup
+Supabase supplies `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to Edge Functions. The service role key is used only inside the function and must never be placed in front-end files.
 
-The page includes Telegram's official Mini App script and calls `ready()` and
-`expand()` when opened inside Telegram. It still needs a public HTTPS address
-before BotFather can launch it. After hosting, configure the bot's Mini App
-entry point to use that address.
+## Local preview
 
-Never put a Telegram bot token in these front-end files or publish it in a
-repository. Real accounts and points need a backend that verifies Telegram's
-signed launch data and records point changes server-side.
+Open `index.html` in a browser to view the interface. Earning points requires opening the hosted app through Telegram, because the backend checks Telegram launch data.
+
+## Game rules
+
+- A tap awards one TAP while the player has energy.
+- Players start with 1,000 energy; one energy point returns every three seconds, up to the maximum.
+- Balance and energy changes are applied atomically in Postgres.
